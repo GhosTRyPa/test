@@ -1,19 +1,19 @@
-// function getComputerChoice() {
-//   let pcchoice = Math.floor(Math.random() * 3);
-//   switch (pcchoice) {
-//     case 0:
-//       return "paper";
-//       break;
-//     case 1:
-//       return "rock";
-//       break;
-//     case 2:
-//       return "scissors";
-//       break;
-//   }
-// }
-// let computerChoice = getComputerChoice(); // here i got the computer choice
-let computerChoice = "rock";
+function getComputerChoice() {
+  let pcchoice = Math.floor(Math.random() * 3);
+  switch (pcchoice) {
+    case 0:
+      return "paper";
+      break;
+    case 1:
+      return "rock";
+      break;
+    case 2:
+      return "scissors";
+      break;
+  }
+}
+let computerChoice = getComputerChoice(); // here i got the computer choice
+
 // -------------------------------------------------------------------
 
 function getHumanChoice() {
