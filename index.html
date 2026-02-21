@@ -1,17 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background: #1a1a2e;
+      color: #fff;
+    }
+    h1 { margin-bottom: 30px; }
+    .choices {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .choice-btn {
+      padding: 20px 40px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background: #16213e;
+      color: #fff;
+      transition: 0.3s;
+    }
+    .choice-btn:hover { background: #0f3460; transform: scale(1.05); }
+    #result { font-size: 24px; margin: 20px 0; }
+    #score { font-size: 20px; margin-bottom: 20px; }
+    #round { font-size: 18px; color: #aaa; }
+    .hidden { display: none; }
+    #playAgain {
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      background: #e94560;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-    <div id="game">
-        <p id="round-result"></p>
-        <p>Human Score: <span id="human-score">0</span></p>
-        <p>Computer Score: <span id="computer-score">0</span></p>
-        <p id="final-result"></p>
-    </div>
-    <script src="app.js"></script>
+  <h1>Rock Paper Scissors</h1>
+  <div id="round">Round 1/5</div>
+  <div id="score">You: 0 | Computer: 0</div>
+  
+  <div class="choices" id="choices">
+    <button class="choice-btn" onclick="play('rock')">Rock</button>
+    <button class="choice-btn" onclick="play('paper')">Paper</button>
+    <button class="choice-btn" onclick="play('scissors')">Scissors</button>
+  </div>
+  
+  <div id="result"></div>
+  <button id="playAgain" class="hidden" onclick="resetGame()">Play Again</button>
+
+  <script>
+    const choices = ['rock', 'paper', 'scissors'];
+    let playerScore = 0;
+    let computerScore = 0;
+    let round = 1;
+    const maxRounds = 5;
+
+    function play(playerChoice) {
+      const computerChoice = choices[Math.floor(Math.random() * 3)];
+      
+      let result = '';
+      if (playerChoice === computerChoice) {
+        result = 'Tie!';
+      } else if (
+        (playerChoice === 'rock' && computerChoice === 'scissors') ||
+        (playerChoice === 'paper' && computerChoice === 'rock') ||
+        (playerChoice === 'scissors' && computerChoice === 'paper')
+      ) {
+        playerScore++;
+        result = 'You win!';
+      } else {
+        computerScore++;
+        result = 'Computer wins!';
+      }
+
+      document.getElementById('result').textContent = `You: ${playerChoice} | Computer: ${computerChoice} - ${result}`;
+      document.getElementById('score').textContent = `You: ${playerScore} | Computer: ${computerScore}`;
+
+      if (round >= maxRounds) {
+        endGame();
+      } else {
+        round++;
+        document.getElementById('round').textContent = `Round ${round}/${maxRounds}`;
+      }
+    }
+
+    function endGame() {
+      document.getElementById('choices').classList.add('hidden');
+      document.getElementById('round').textContent = 'Game Over!';
+      
+      let finalResult = '';
+      if (playerScore > computerScore) {
+        finalResult = 'You win the game!';
+      } else if (computerScore > playerScore) {
+        finalResult = 'Computer wins the game!';
+      } else {
+        finalResult = "It's a tie!";
+      }
+      
+      document.getElementById('result').textContent = finalResult;
+      document.getElementById('playAgain').classList.remove('hidden');
+    }
+
+    function resetGame() {
+      playerScore = 0;
+      computerScore = 0;
+      round = 1;
+      document.getElementById('score').textContent = 'You: 0 | Computer: 0';
+      document.getElementById('round').textContent = 'Round 1/5';
+      document.getElementById('result').textContent = '';
+      document.getElementById('choices').classList.remove('hidden');
+      document.getElementById('playAgain').classList.add('hidden');
+    }
+  </script>
 </body>
 </html>
